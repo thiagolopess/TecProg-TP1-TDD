@@ -3,13 +3,12 @@ package app;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class FileParser {
+    public Map<Integer, int[]> fileData = new HashMap<>();
     public List<String> fileLines = new ArrayList<>();
-
-    public static void main(String[] args) {
-        System.out.println(new File(".").getAbsoluteFile());
-    }
 
     public void readFile(String filename) throws ArquivoNaoEncontradoException {
         try {
@@ -29,7 +28,6 @@ public class FileParser {
         }
     }
 
-    public void readFile(String filename) throws ArquivoNaoEncontradoException {
-
+    public void parseDataFile() {
     }
 }
