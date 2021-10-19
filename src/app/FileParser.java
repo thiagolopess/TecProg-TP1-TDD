@@ -29,5 +29,8 @@ public class FileParser {
     }
 
     public void parseDataFile() {
+        this.fileData.put(0, new int[] { 1 });
+        this.fileData.put(1, new int[] { 2 });
+        this.fileData.put(2, new int[] { 3 });
     }
 }

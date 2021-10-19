@@ -27,3 +27,6 @@ hs_err_pid*
 
 # intellij configuration file
 TecProg-TP1-TDD.iml
+
+# deleted files
+out
