@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import Exceptions.ArquivoNaoEncontradoException;
 
-import java.util.Map;
-
 public class ReadFileTest {
 
     @Test(expected = ArquivoNaoEncontradoException.class)
@@ -21,11 +19,17 @@ public class ReadFileTest {
 
         try {
             parser.readFile("analysis_files/tests/analysisMemory.out");
-        } catch(ArquivoNaoEncontradoException e) {
+        } catch (ArquivoNaoEncontradoException e) {
             e.printStackTrace();
         }
 
-        assertNotNull(parser.fileDataMap);
-        assertEquals(parser.fileDataMap.size(), 3);
+        String[] lines = {
+                "---------- Evolution 0 ----------",
+                "1", "---------- Evolution 1 ----------",
+                "2", "---------- Evolution 2 ----------",
+                "3"
+        };
+
+        assertArrayEquals(parser.fileLines.toArray(), lines);
     }
 }
