@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class FileParser {
-    public Map<Integer, int[]> fileData = new HashMap<>();
+    public Map<Integer, List<Integer>> fileData = new HashMap<>();
     public List<String> fileLines = new ArrayList<>();
 
-    public void readFile(String filename) throws ArquivoNaoEncontradoException {
+    public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
 
@@ -24,13 +24,20 @@ public class FileParser {
         } catch (FileNotFoundException e) {
             throw new ArquivoNaoEncontradoException("Arquivo não encontrado");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FalhaLeituraArquivoException("Falha na leitura do arquivo");
         }
     }
 
     public void parseDataFile() {
-        this.fileData.put(0, new int[] { 1 });
-        this.fileData.put(1, new int[] { 2 });
-        this.fileData.put(2, new int[] { 3 });
+        int key = 0;
+
+        for (String line : fileLines) {
+            if (line.contains("-")) {
+                key = Integer.parseInt(line.replaceAll("[^0-9]", ""));
+                this.fileData.put(key, new ArrayList<>());
+            } else {
+                this.fileData.get(key).add(Integer.parseInt(line));
+            }
+        }
     }
 }

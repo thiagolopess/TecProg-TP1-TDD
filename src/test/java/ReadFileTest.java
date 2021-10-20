@@ -1,4 +1,5 @@
 import app.ArquivoNaoEncontradoException;
+import app.FalhaLeituraArquivoException;
 import app.FileParser;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +10,11 @@ public class ReadFileTest {
     public void test() throws ArquivoNaoEncontradoException {
         FileParser parser = new FileParser();
 
-        parser.readFile("src/analysisMemory.out");
+        try {
+            parser.readFile("src/analysisMemory.out");
+        } catch (FalhaLeituraArquivoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -27,6 +32,8 @@ public class ReadFileTest {
         try {
             parser.readFile("src/test/resources/analysisMemory.out");
         } catch (ArquivoNaoEncontradoException e) {
+            e.printStackTrace();
+        } catch (FalhaLeituraArquivoException e) {
             e.printStackTrace();
         }
 

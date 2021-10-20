@@ -1,6 +1,8 @@
 package app;
 
-public class ArquivoNaoEncontradoException extends Exception {
+import java.io.FileNotFoundException;
+
+public class ArquivoNaoEncontradoException extends FileNotFoundException {
     public ArquivoNaoEncontradoException(String errorMessage) {
         super(errorMessage);
     }
