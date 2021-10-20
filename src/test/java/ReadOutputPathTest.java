@@ -1,4 +1,3 @@
-import app.DelimitadorInvalidoException;
 import app.FileParser;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +15,7 @@ public class ReadOutputPathTest {
 
         FileParser parser = new FileParser();
 
-        parser.readOutputDelimiter();
+        parser.readOutputPath();
 
         Assert.assertEquals(parser.outputPath, input);
 

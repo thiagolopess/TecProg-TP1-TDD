@@ -8,6 +8,7 @@ public class FileParser {
     public List<String> fileLines = new ArrayList<>();
     public char delimiter = ';';
     public String outputPath;
+    public String outputFormat;
 
     public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
         try {
@@ -55,5 +56,8 @@ public class FileParser {
         Scanner reader = new Scanner(System.in);
 
         this.outputPath = reader.next();
+    }
+
+    public void readOutputFormat() {
     }
 }
