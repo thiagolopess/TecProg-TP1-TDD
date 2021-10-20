@@ -59,5 +59,8 @@ public class FileParser {
     }
 
     public void readOutputFormat() {
+        Scanner reader = new Scanner(System.in);
+
+        this.outputFormat = reader.next();
     }
 }
