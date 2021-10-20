@@ -41,7 +41,7 @@ public class FileParser {
         }
     }
 
-    public void writeOutputFile() {
-
+    public void writeOutputFile() throws EscritaNaoPermitidaException{
+        throw new EscritaNaoPermitidaException("Erro ao escrever no arquivo");
     }
 }
