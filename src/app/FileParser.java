@@ -7,6 +7,7 @@ public class FileParser {
     public Map<Integer, List<Integer>> fileData = new HashMap<>();
     public List<String> fileLines = new ArrayList<>();
     public char delimiter = ';';
+    public String outputPath;
 
     public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
         try {
@@ -48,5 +49,8 @@ public class FileParser {
         }
 
         this.delimiter = input.charAt(0);
+    }
+
+    public void readOutputPath() {
     }
 }

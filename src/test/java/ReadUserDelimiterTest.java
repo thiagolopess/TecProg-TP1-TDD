@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-public class ReadUserPreferencesTest {
+public class ReadUserDelimiterTest {
     @Test(expected = DelimitadorInvalidoException.class)
     public void test() throws DelimitadorInvalidoException {
         InputStream sysInBackup = System.in;
@@ -35,6 +35,7 @@ public class ReadUserPreferencesTest {
         }
 
         Assert.assertEquals(parser.delimiter, ';');
+
 
         System.setIn(sysInBackup);
     }
