@@ -30,7 +30,7 @@ public class ReadFileTest {
         };
 
         try {
-            parser.readFile("src/test/resources/analysisMemory.out");
+            parser.readFile("src/test/resources/analysisMemory02.out");
         } catch (ArquivoNaoEncontradoException e) {
             e.printStackTrace();
         } catch (FalhaLeituraArquivoException e) {

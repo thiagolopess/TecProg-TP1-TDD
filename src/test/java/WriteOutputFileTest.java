@@ -7,16 +7,16 @@ import org.junit.Test;
 
 public class WriteOutputFileTest {
 
-    @Test(expected = EscritaNaoPermitidaException.class)
+    @Test(expected = ArquivoNaoEncontradoException.class)
     public void test() throws Exception {
         FileParser parser = new FileParser();
 
         try {
-            parser.readFile("/");
+            parser.readFile("src/test/resources/randomFile.out");
         } catch (FalhaLeituraArquivoException e) {
             e.printStackTrace();
         } catch (ArquivoNaoEncontradoException e) {
-            e.printStackTrace();
+            throw e;
         }
 
         parser.parseDataFile();
@@ -25,9 +25,8 @@ public class WriteOutputFileTest {
 //        file.setWritable(false);
 
         parser.delimiter = ';';
-        parser.outputPath = "\\\\wsl$\\Ubuntu-20.04\\home\\output.out";
 
-        parser.writeOutputFile("colunas");
+        parser.writeOutputFile("colunas", "src/test/resources/analysisMemoryTab.out");
     }
 
     @Test
@@ -47,9 +46,13 @@ public class WriteOutputFileTest {
             e.printStackTrace();
         }
 
+        parser.parseDataFile();
+
         try {
-            parser.writeOutputFile("linhas");
+            parser.writeOutputFile("linhas", "src/test/resources/analysisMemoryTab.out");
         } catch (EscritaNaoPermitidaException e) {
+            e.printStackTrace();
+        } catch (ArquivoNaoEncontradoException e) {
             e.printStackTrace();
         }
 
@@ -83,9 +86,13 @@ public class WriteOutputFileTest {
             e.printStackTrace();
         }
 
+        parser.parseDataFile();
+
         try {
-            parser.writeOutputFile("colunas");
+            parser.writeOutputFile("colunas", "src/test/resources/analysisMemoryTab.out");
         } catch (EscritaNaoPermitidaException e) {
+            e.printStackTrace();
+        } catch (ArquivoNaoEncontradoException e) {
             e.printStackTrace();
         }
 
