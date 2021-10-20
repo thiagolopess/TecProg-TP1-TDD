@@ -40,5 +40,13 @@ public class FileParser {
     }
 
     public void readOutputDelimiter() throws DelimitadorInvalidoException {
+        Scanner reader = new Scanner(System.in);
+        String input = reader.next();
+
+        if (input.length() > 1) {
+            throw new DelimitadorInvalidoException();
+        }
+
+        this.delimiter = input.charAt(0);
     }
 }

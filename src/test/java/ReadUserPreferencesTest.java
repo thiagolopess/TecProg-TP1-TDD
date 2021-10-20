@@ -1,6 +1,4 @@
-import app.ArquivoNaoEncontradoException;
 import app.DelimitadorInvalidoException;
-import app.FalhaLeituraArquivoException;
 import app.FileParser;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,6 +16,25 @@ public class ReadUserPreferencesTest {
         FileParser parser = new FileParser();
 
         parser.readOutputDelimiter();
+
+        System.setIn(sysInBackup);
+    }
+
+    @Test
+    public void test1() {
+        InputStream sysInBackup = System.in;
+        ByteArrayInputStream in = new ByteArrayInputStream(";".getBytes());
+        System.setIn(in);
+
+        FileParser parser = new FileParser();
+
+        try {
+            parser.readOutputDelimiter();
+        } catch (DelimitadorInvalidoException e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertEquals(parser.delimiter, ';');
 
         System.setIn(sysInBackup);
     }
