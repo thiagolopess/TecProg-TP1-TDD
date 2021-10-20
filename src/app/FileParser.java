@@ -52,5 +52,8 @@ public class FileParser {
     }
 
     public void readOutputPath() {
+        Scanner reader = new Scanner(System.in);
+
+        this.outputPath = reader.next();
     }
 }
