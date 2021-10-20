@@ -9,8 +9,13 @@ import java.util.HashMap;
 public class FileParser {
     public Map<Integer, List<Integer>> fileData = new HashMap<>();
     public List<String> fileLines = new ArrayList<>();
+    public char delimiter;
+    public String outputPath;
 
     public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
+
+        this.fileLines = new ArrayList<>();
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
 
@@ -41,7 +46,7 @@ public class FileParser {
         }
     }
 
-    public void writeOutputFile() throws EscritaNaoPermitidaException{
+    public void writeOutputFile(String format) throws EscritaNaoPermitidaException{
         throw new EscritaNaoPermitidaException("Erro ao escrever no arquivo");
     }
 }
