@@ -40,4 +40,8 @@ public class FileParser {
             }
         }
     }
+
+    public void writeOutputFile() {
+
+    }
 }
