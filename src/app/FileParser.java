@@ -12,7 +12,6 @@ public class FileParser {
     public String outputFormat;
 
     public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
-
         this.fileLines = new ArrayList<>();
 
         try {
@@ -30,8 +29,6 @@ public class FileParser {
         } catch (IOException e) {
             throw new FalhaLeituraArquivoException("Falha na leitura do arquivo");
         }
-
-        System.out.println(this.fileLines);
     }
 
     public void parseDataFile() {
