@@ -23,14 +23,20 @@ public class ReadFileTest {
         String[] lines = {
                 "---------- Evolution 0 ----------",
                 "1",
+                "3",
+                "4",
                 "---------- Evolution 1 ----------",
                 "2",
+                "2",
+                "3",
                 "---------- Evolution 2 ----------",
-                "3"
+                "4",
+                "1",
+                "2"
         };
 
         try {
-            parser.readFile("src/test/resources/analysisMemory.out");
+            parser.readFile("src/test/resources/analysisMemory02.out");
         } catch (ArquivoNaoEncontradoException e) {
             e.printStackTrace();
         } catch (FalhaLeituraArquivoException e) {

@@ -1,6 +1,7 @@
 package app;
 
 import java.io.*;
+import java.nio.file.AccessDeniedException;
 import java.util.*;
 
 public class FileParser {
@@ -11,6 +12,9 @@ public class FileParser {
     public String outputFormat;
 
     public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
+
+        this.fileLines = new ArrayList<>();
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
 
@@ -26,6 +30,8 @@ public class FileParser {
         } catch (IOException e) {
             throw new FalhaLeituraArquivoException("Falha na leitura do arquivo");
         }
+
+        System.out.println(this.fileLines);
     }
 
     public void parseDataFile() {
@@ -40,7 +46,7 @@ public class FileParser {
             }
         }
     }
-
+    
     public void readOutputDelimiter() throws DelimitadorInvalidoException {
         Scanner reader = new Scanner(System.in);
         String input = reader.next();
@@ -62,5 +68,76 @@ public class FileParser {
         Scanner reader = new Scanner(System.in);
 
         this.outputFormat = reader.next();
+    }
+
+    public void writeOutputFile() throws EscritaNaoPermitidaException {
+        try {
+            OutputStream os = new FileOutputStream(outputPath);
+            OutputStreamWriter osw = new OutputStreamWriter(os);
+            BufferedWriter bw = new BufferedWriter(osw);
+
+            int count = 0;
+
+            if (outputFormat.equals("linhas")) {
+                for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
+                    count = 0;
+                    bw.write(entry.getKey().toString() + delimiter);
+
+                    for (Integer value : entry.getValue()) {
+                        count++;
+                        bw.write(value.toString());
+                        if (count < entry.getValue().size()) {
+                            bw.write(delimiter);
+                        }
+
+                    }
+
+                    bw.write("\n");
+                }
+            } else {
+                count = 0;
+                int maxValues = Integer.MIN_VALUE;
+
+                for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
+                    bw.write(entry.getKey().toString());
+
+                    if (count < entry.getValue().size() - 1) {
+                        bw.write(delimiter);
+                    }
+
+                    int values = entry.getValue().size();
+
+                    if (values > maxValues) {
+                        maxValues = values;
+                    }
+
+                    count++;
+                }
+
+                bw.write("\n");
+
+                for (int i = 0; i < maxValues; i++) {
+                    for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
+                        try {
+                            if (entry.getValue().get(i) != null) {
+                                bw.write(entry.getValue().get(i).toString());
+
+                                bw.write(delimiter);
+                            }
+                        } catch (IndexOutOfBoundsException e) {
+                            break;
+                        }
+                    }
+
+                    bw.write("\n");
+                }
+            }
+
+            bw.close();
+        } catch (AccessDeniedException e) {
+            throw new EscritaNaoPermitidaException();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
