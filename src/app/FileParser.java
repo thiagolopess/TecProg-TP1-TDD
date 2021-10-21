@@ -1,15 +1,14 @@
 package app;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class FileParser {
     public Map<Integer, List<Integer>> fileData = new HashMap<>();
     public List<String> fileLines = new ArrayList<>();
     public char delimiter = ';';
+    public String outputPath;
+    public String outputFormat;
 
     public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
 
@@ -45,6 +44,29 @@ public class FileParser {
                 this.fileData.get(key).add(Integer.parseInt(line));
             }
         }
+    }
+    
+    public void readOutputDelimiter() throws DelimitadorInvalidoException {
+        Scanner reader = new Scanner(System.in);
+        String input = reader.next();
+
+        if (input.length() > 1) {
+            throw new DelimitadorInvalidoException();
+        }
+
+        this.delimiter = input.charAt(0);
+    }
+
+    public void readOutputPath() {
+        Scanner reader = new Scanner(System.in);
+
+        this.outputPath = reader.next();
+    }
+
+    public void readOutputFormat() {
+        Scanner reader = new Scanner(System.in);
+
+        this.outputFormat = reader.next();
     }
 
     public void writeOutputFile(String format, String outputPath) throws EscritaNaoPermitidaException, ArquivoNaoEncontradoException{
@@ -121,5 +143,4 @@ public class FileParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 }
