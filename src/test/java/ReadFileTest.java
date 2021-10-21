@@ -23,10 +23,16 @@ public class ReadFileTest {
         String[] lines = {
                 "---------- Evolution 0 ----------",
                 "1",
+                "3",
+                "4",
                 "---------- Evolution 1 ----------",
                 "2",
+                "2",
+                "3",
                 "---------- Evolution 2 ----------",
-                "3"
+                "4",
+                "1",
+                "2"
         };
 
         try {
