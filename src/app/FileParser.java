@@ -1,6 +1,7 @@
 package app;
 
 import java.io.*;
+import java.nio.file.AccessDeniedException;
 import java.util.*;
 
 public class FileParser {
@@ -69,7 +70,7 @@ public class FileParser {
         this.outputFormat = reader.next();
     }
 
-    public void writeOutputFile(String format, String outputPath) throws EscritaNaoPermitidaException, ArquivoNaoEncontradoException{
+    public void writeOutputFile() throws EscritaNaoPermitidaException {
         try {
             OutputStream os = new FileOutputStream(outputPath);
             OutputStreamWriter osw = new OutputStreamWriter(os);
@@ -77,59 +78,54 @@ public class FileParser {
 
             int count = 0;
 
-            if (format.equals("linhas")) {
+            if (outputFormat.equals("linhas")) {
                 for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
-//                    System.out.print(entry.getKey().toString() + delimiter);
+                    count = 0;
                     bw.write(entry.getKey().toString() + delimiter);
 
-                    count = 0;
                     for (Integer value : entry.getValue()) {
-                        count ++;
+                        count++;
                         bw.write(value.toString());
-//                        System.out.print(value.toString());
                         if (count < entry.getValue().size()) {
                             bw.write(delimiter);
-//                            System.out.print(delimiter);
                         }
 
                     }
 
                     bw.write("\n");
-                    System.out.print("\n");
                 }
             } else {
-                int maxValues = Integer.MIN_VALUE;
                 count = 0;
+                int maxValues = Integer.MIN_VALUE;
+
                 for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
-
-
                     bw.write(entry.getKey().toString());
-                    if (count <  entry.getValue().size() -1){
+
+                    if (count < entry.getValue().size() - 1) {
                         bw.write(delimiter);
                     }
 
                     int values = entry.getValue().size();
+
                     if (values > maxValues) {
                         maxValues = values;
                     }
-                    count++;
 
+                    count++;
                 }
 
                 bw.write("\n");
 
-
                 for (int i = 0; i < maxValues; i++) {
-                    count = 0;
-
                     for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
-                        if (entry.getValue().get(i) != null) {
-                            bw.write(entry.getValue().get(i).toString());
+                        try {
+                            if (entry.getValue().get(i) != null) {
+                                bw.write(entry.getValue().get(i).toString());
 
-                            if (count < entry.getValue().size() -1){
                                 bw.write(delimiter);
                             }
-                            count++;
+                        } catch (IndexOutOfBoundsException e) {
+                            break;
                         }
                     }
 
@@ -138,9 +134,10 @@ public class FileParser {
             }
 
             bw.close();
-        }  catch (FileNotFoundException e) {
-            throw new ArquivoNaoEncontradoException("Arquivo não encontrado");
+        } catch (AccessDeniedException e) {
+            throw new EscritaNaoPermitidaException();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 }
