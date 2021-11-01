@@ -69,9 +69,7 @@ public class FileParser {
 
     public void writeOutputFile() throws EscritaNaoPermitidaException {
         try {
-            OutputStream os = new FileOutputStream(outputPath);
-            OutputStreamWriter osw = new OutputStreamWriter(os);
-            BufferedWriter bw = new BufferedWriter(osw);
+            BufferedWriter bw = openOutputWriteFile();
 
             int count = 0;
 
@@ -87,6 +85,13 @@ public class FileParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private BufferedWriter openOutputWriteFile() throws FileNotFoundException {
+        OutputStream os = new FileOutputStream(outputPath);
+        OutputStreamWriter osw = new OutputStreamWriter(os);
+        BufferedWriter bw = new BufferedWriter(osw);
+        return bw;
     }
 
     private void writeColumns(BufferedWriter bw) throws IOException {
