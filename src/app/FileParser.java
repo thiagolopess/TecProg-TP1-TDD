@@ -76,21 +76,7 @@ public class FileParser {
             int count = 0;
 
             if (outputFormat.equals("linhas")) {
-                for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
-                    count = 0;
-                    bw.write(entry.getKey().toString() + delimiter);
-
-                    for (Integer value : entry.getValue()) {
-                        count++;
-                        bw.write(value.toString());
-                        if (count < entry.getValue().size()) {
-                            bw.write(delimiter);
-                        }
-
-                    }
-
-                    bw.write("\n");
-                }
+                writeLines(bw);
             } else {
                 count = 0;
                 int maxValues = Integer.MIN_VALUE;
@@ -135,6 +121,25 @@ public class FileParser {
             throw new EscritaNaoPermitidaException();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void writeLines(BufferedWriter bw) throws IOException {
+        int count;
+        for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
+            count = 0;
+            bw.write(entry.getKey().toString() + delimiter);
+
+            for (Integer value : entry.getValue()) {
+                count++;
+                bw.write(value.toString());
+                if (count < entry.getValue().size()) {
+                    bw.write(delimiter);
+                }
+
+            }
+
+            bw.write("\n");
         }
     }
 }
