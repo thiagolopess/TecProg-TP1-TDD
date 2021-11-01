@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.AccessDeniedException;
 import java.util.*;
 
+
+
 public class FileParser {
     public Map<Integer, List<Integer>> fileData = new HashMap<>();
     public List<String> fileLines = new ArrayList<>();
@@ -137,21 +139,7 @@ public class FileParser {
     }
 
     private void writeLines(BufferedWriter bw) throws IOException {
-        int count;
-        for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
-            count = 0;
-            bw.write(entry.getKey().toString() + delimiter);
-
-            for (Integer value : entry.getValue()) {
-                count++;
-                bw.write(value.toString());
-                if (count < entry.getValue().size()) {
-                    bw.write(delimiter);
-                }
-
-            }
-
-            bw.write("\n");
-        }
+        new WriteOutputFile(bw, fileData, delimiter).writeLines();
     }
+
 }
