@@ -15,8 +15,7 @@ public class FileParser {
         this.fileLines = new ArrayList<>();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-
+            BufferedReader br = openInputFileReader(filename);
             String fileLine = br.readLine();
 
             while (fileLine != null) {
@@ -29,6 +28,10 @@ public class FileParser {
         } catch (IOException e) {
             throw new FalhaLeituraArquivoException("Falha na leitura do arquivo");
         }
+    }
+
+    private BufferedReader openInputFileReader(String filename) throws FileNotFoundException {
+        return new BufferedReader(new FileReader(filename));
     }
 
     public void parseDataFile() {
