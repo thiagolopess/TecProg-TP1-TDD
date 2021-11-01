@@ -78,42 +78,7 @@ public class FileParser {
             if (outputFormat.equals("linhas")) {
                 writeLines(bw);
             } else {
-                count = 0;
-                int maxValues = Integer.MIN_VALUE;
-
-                for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
-                    bw.write(entry.getKey().toString());
-
-                    if (count < entry.getValue().size() - 1) {
-                        bw.write(delimiter);
-                    }
-
-                    int values = entry.getValue().size();
-
-                    if (values > maxValues) {
-                        maxValues = values;
-                    }
-
-                    count++;
-                }
-
-                bw.write("\n");
-
-                for (int i = 0; i < maxValues; i++) {
-                    for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
-                        try {
-                            if (entry.getValue().get(i) != null) {
-                                bw.write(entry.getValue().get(i).toString());
-
-                                bw.write(delimiter);
-                            }
-                        } catch (IndexOutOfBoundsException e) {
-                            break;
-                        }
-                    }
-
-                    bw.write("\n");
-                }
+                writeColumns(bw);
             }
 
             bw.close();
@@ -121,6 +86,45 @@ public class FileParser {
             throw new EscritaNaoPermitidaException();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void writeColumns(BufferedWriter bw) throws IOException {
+        int count;
+        count = 0;
+        int maxValues = Integer.MIN_VALUE;
+
+        for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
+            bw.write(entry.getKey().toString());
+
+            if (count < entry.getValue().size() - 1) {
+                bw.write(delimiter);
+            }
+
+            int values = entry.getValue().size();
+
+            if (values > maxValues) {
+                maxValues = values;
+            }
+
+            count++;
+        }
+
+        bw.write("\n");
+
+        for (int i = 0; i < maxValues; i++) {
+            for (Map.Entry<Integer, List<Integer>> entry : fileData.entrySet()) {
+                try {
+                    if (entry.getValue().get(i) != null) {
+                        bw.write(entry.getValue().get(i).toString());
+
+                        bw.write(delimiter);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    break;
+                }
+            }
+            bw.write("\n");
         }
     }
 
