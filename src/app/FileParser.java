@@ -7,46 +7,18 @@ import java.util.*;
 
 
 public class FileParser {
-    public Map<Integer, List<Integer>> fileData = new HashMap<>();
-    public List<String> fileLines = new ArrayList<>();
     public char delimiter = ';';
     public String outputPath;
     public String outputFormat;
 
+    Persistencia persistencia = new Persistencia();
+
     public void readFile(String filename) throws ArquivoNaoEncontradoException, FalhaLeituraArquivoException {
-        this.fileLines = new ArrayList<>();
-
-        try {
-            BufferedReader br = openInputFileReader(filename);
-            String fileLine = br.readLine();
-
-            while (fileLine != null) {
-                fileLines.add(fileLine);
-
-                fileLine = br.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            throw new ArquivoNaoEncontradoException("Arquivo não encontrado");
-        } catch (IOException e) {
-            throw new FalhaLeituraArquivoException("Falha na leitura do arquivo");
-        }
-    }
-
-    private BufferedReader openInputFileReader(String filename) throws FileNotFoundException {
-        return new BufferedReader(new FileReader(filename));
+        persistencia.readFile(filename);
     }
 
     public void parseDataFile() {
-        int key = 0;
-
-        for (String line : fileLines) {
-            if (line.contains("-")) {
-                key = Integer.parseInt(line.replaceAll("[^0-9]", ""));
-                this.fileData.put(key, new ArrayList<>());
-            } else {
-                this.fileData.get(key).add(Integer.parseInt(line));
-            }
-        }
+        persistencia.parseDataFile();
     }
     
     public void readOutputDelimiter() throws DelimitadorInvalidoException {
@@ -73,38 +45,15 @@ public class FileParser {
     }
 
     public void writeOutputFile() throws EscritaNaoPermitidaException {
-        try {
-            BufferedWriter bw = openOutputWriteFile();
+        persistencia.writeOutputFile(outputFormat,outputPath, delimiter);
 
-            int count = 0;
-
-            if (outputFormat.equals("linhas")) {
-                writeLines(bw);
-            } else {
-                writeColumns(bw);
-            }
-
-            bw.close();
-        } catch (AccessDeniedException e) {
-            throw new EscritaNaoPermitidaException();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    private BufferedWriter openOutputWriteFile() throws FileNotFoundException {
-        OutputStream os = new FileOutputStream(outputPath);
-        OutputStreamWriter osw = new OutputStreamWriter(os);
-        BufferedWriter bw = new BufferedWriter(osw);
-        return bw;
+    public Map<Integer, List<Integer>> getPersistenceFileData(){
+        return persistencia.getFileData();
     }
 
-    private void writeColumns(BufferedWriter bw) throws IOException {
-        new WriteOutputFile(bw, fileData, delimiter).writeColumns();
+    public List<String> getPersistenceFileLines(){
+        return persistencia.getFileLines();
     }
-
-    private void writeLines(BufferedWriter bw) throws IOException {
-        new WriteOutputFile(bw, fileData, delimiter).writeLines();
-    }
-
 }

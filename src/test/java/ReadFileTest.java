@@ -43,6 +43,6 @@ public class ReadFileTest {
             e.printStackTrace();
         }
 
-        Assert.assertArrayEquals(parser.fileLines.toArray(), lines);
+        Assert.assertArrayEquals(parser.getPersistenceFileLines().toArray(), lines);
     }
 }

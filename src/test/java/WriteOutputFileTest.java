@@ -71,7 +71,7 @@ public class WriteOutputFileTest {
         }
 
 
-        Assert.assertArrayEquals(wantedOutput, parser.fileLines.toArray());
+        Assert.assertArrayEquals(wantedOutput, parser.getPersistenceFileLines().toArray());
     }
 
     @Test
@@ -115,6 +115,6 @@ public class WriteOutputFileTest {
             e.printStackTrace();
         }
 
-        Assert.assertArrayEquals(wantedOutput, parser.fileLines.toArray());
+        Assert.assertArrayEquals(wantedOutput, parser.getPersistenceFileLines().toArray());
     }
 }
